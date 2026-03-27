@@ -7,7 +7,7 @@ def test_health_check():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {
-        "status": 200,
+        "status_code": 200,
         "detail": "ok",
         "result": "working"
                                }
