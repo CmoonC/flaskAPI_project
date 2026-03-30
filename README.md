@@ -47,3 +47,16 @@ If you have Docker installed, you can run the application withut setting up a lo
    docker run -p 8000:8000 fastapi-cv-app
    ```
 The API will be available at http://localhost:8000/
+
+## Database management 
+
+This project uses **PostgreSQL** for persistent data and **Redis** for cashing. 
+
+### How to access the databases:
+-**Postgres**: Accessible  on 'localhost:5432' from your host machine.
+-**Redis**: Accessible on 'localhost:6379'.
+
+### Useful commands:
+- `docker-compose up --build`: Starts all services and builds images.
+- `docker-compose down`: Stops and removes all containers. 
+- `docker-compose down -v`: Stops containers **and deletes the database data** (use with caution!)
