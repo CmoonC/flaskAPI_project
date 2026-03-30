@@ -1,8 +1,7 @@
 #app/main.py
 from fastapi import FastAPI
 from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
-
+from fastapi.middleware.cors import CORSMiddleware
 from app.routers import health
 import os
 
