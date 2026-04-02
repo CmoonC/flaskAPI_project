@@ -60,3 +60,21 @@ This project uses **PostgreSQL** for persistent data and **Redis** for cashing.
 - `docker-compose up --build`: Starts all services and builds images.
 - `docker-compose down`: Stops and removes all containers. 
 - `docker-compose down -v`: Stops containers **and deletes the database data** (use with caution!)
+
+### Data Models 
+- Located in 'app/models/'
+- Every time you change a model, you must create a migration
+
+### Database Migrations (Alembic)
+To apply the current database schema:
+```bash
+alembic upgrade head
+```
+To create a new migration after changing a model:
+```bash
+alembic revision --autogenerate -m "describe your changes"
+```
+
+##Logging 
+Application logs are visible in the Docker console. Configuration is hadnled in app/utils/logging.py.
+I used the lifeshpan event handler to log app startup and shutdown.
