@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 from app.db.session import get_db
 from app.db.redis_client import get_redis
+from app.utils.logging import logger
 
 router = APIRouter()
 
@@ -13,7 +14,7 @@ async def health_check(
         redis = Depends(get_redis)
 ):
     """Health check endpoint with database pings"""
-
+    logger.info("Health check requested")
     # Check PostgreSQL
     try:
         await db.execute(text("SELECT 1"))

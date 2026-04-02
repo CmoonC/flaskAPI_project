@@ -1,19 +1,32 @@
 #app/main.py
 from fastapi import FastAPI
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import health
-import os
+#import os
+from app.core.config import DATABASE_URL, SECRET_KEY
+from app.utils.logging import logger
+from contextlib import asynccontextmanager
 
 #loads environment variables from .env file (kept private)
-load_dotenv()
-
+#load_dotenv()
 #Access secret keys and database URL from environment
-SECRET_KEY = os.getenv("SECRET_KEY")
-DATABASE_URL = os.getenv("DATABASE_URL")
+#SECRET_KEY = os.getenv("SECRET_KEY")
+#DATABASE_URL = os.getenv("DATABASE_URL")
+
+#Logs
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # --- Startup Logic ---
+    logger.info("Application is starting up and connecting to databases")
+
+    yield # the app stays here while it is running and serving requests
+
+    # --- Shutdown Logic ---
+    logger.info("Application is shutting down")
 
 #initialize FastAPI app
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,6 +35,8 @@ app.add_middleware(
     allow_methods=["*"], #Allows all methods
     allow_headers=["*"], #Allows all headers
 )
+
+
 #Include health router
 app.include_router(health.router, prefix="")
 
